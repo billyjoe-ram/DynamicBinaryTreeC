@@ -1,7 +1,7 @@
-#include <stdio.h>
+    #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "header.h"
+#include "arvore_dinamica.h"
 
 int main() {
     Jogador* raiz = NULL;

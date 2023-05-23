@@ -3,4 +3,4 @@ project(DynamicBinaryTree C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(DynamicBinaryTree main.c)
+add_executable(DynamicBinaryTree main.c arvore_dinamica.c arvore_dinamica.h)

@@ -1,36 +1,37 @@
+//
+// Created by giovane on 23/05/2023.
+//
+
+#include "arvore_dinamica.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "header.h"
 
-void inserirJogador(Jogador** raiz, Jogador* novoJogador) {
+void inserirJogador(Jogador **raiz, Jogador *novoJogador) {
     if (*raiz == NULL) {
         *raiz = novoJogador;
-    }
-    else {
+    } else {
         if (strcmp(novoJogador->nome, (*raiz)->nome) < 0) {
             inserirJogador(&((*raiz)->esquerda), novoJogador);
-        }
-        else {
+        } else {
             inserirJogador(&((*raiz)->direita), novoJogador);
         }
     }
 }
 
-Jogador* buscarJogador(Jogador* raiz, const char* nome) {
+Jogador *buscarJogador(Jogador *raiz, const char *nome) {
     if (raiz == NULL || strcmp(nome, raiz->nome) == 0) {
         return raiz;
     }
 
     if (strcmp(nome, raiz->nome) < 0) {
         return buscarJogador(raiz->esquerda, nome);
-    }
-    else {
+    } else {
         return buscarJogador(raiz->direita, nome);
     }
 }
 
-void listarJogadores(Jogador* raiz) {
+void listarJogadores(Jogador *raiz) {
     if (raiz != NULL) {
         listarJogadores(raiz->esquerda);
         printf("Nome: %s\n", raiz->nome);
@@ -43,28 +44,23 @@ void listarJogadores(Jogador* raiz) {
     }
 }
 
-void excluirJogador(Jogador** raiz, const char* nome) {
+void excluirJogador(Jogador **raiz, const char *nome) {
     if (*raiz == NULL) {
         printf("Jogador nao encontrado.\n");
-    }
-    else {
+    } else {
         if (strcmp(nome, (*raiz)->nome) < 0) {
             excluirJogador(&((*raiz)->esquerda), nome);
-        }
-        else if (strcmp(nome, (*raiz)->nome) > 0) {
+        } else if (strcmp(nome, (*raiz)->nome) > 0) {
             excluirJogador(&((*raiz)->direita), nome);
-        }
-        else {
-            Jogador* jogadorRemovido = *raiz;
+        } else {
+            Jogador *jogadorRemovido = *raiz;
 
             if ((*raiz)->esquerda == NULL) {
                 *raiz = (*raiz)->direita;
-            }
-            else if ((*raiz)->direita == NULL) {
+            } else if ((*raiz)->direita == NULL) {
                 *raiz = (*raiz)->esquerda;
-            }
-            else {
-                Jogador* substituto = (*raiz)->direita;
+            } else {
+                Jogador *substituto = (*raiz)->direita;
 
                 while (substituto->esquerda != NULL) {
                     substituto = substituto->esquerda;
@@ -80,7 +76,7 @@ void excluirJogador(Jogador** raiz, const char* nome) {
     }
 }
 
-void liberarMemoria(Jogador* raiz) {
+void liberarMemoria(Jogador *raiz) {
     if (raiz != NULL) {
         liberarMemoria(raiz->esquerda);
         liberarMemoria(raiz->direita);
