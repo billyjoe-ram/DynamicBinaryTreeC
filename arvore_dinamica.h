@@ -4,19 +4,25 @@
 
 #ifndef DYNAMICBINARYTREE_ARVORE_DINAMICA_H
 #define DYNAMICBINARYTREE_ARVORE_DINAMICA_H
-
-
-typedef struct Jogador {
+typedef struct {
     char nome[100];
     char posicao[100];
     int idade;
     int habilidade;
     int camisa;
-    struct Jogador *esquerda;
-    struct Jogador *direita;
-} Jogador;
+} tree_dados;
 
-void inserirJogador(Jogador **raiz, Jogador *novoJogador);
+typedef struct no_arvbin* arvbin;
+
+struct no_arvbin {
+    arvbin esq;
+    tree_dados dado;
+    arvbin dir;
+};
+
+void inserirJogador(arvbin* no, tree_dados dados);
+
+//void inserirJogador(Jogador **raiz, Jogador *novoJogador);
 
 Jogador *buscarJogador(Jogador *raiz, const char *nome);
 

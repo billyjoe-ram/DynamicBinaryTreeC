@@ -7,6 +7,32 @@
 #include <stdlib.h>
 #include <string.h>
 
+void inserirJogador(arvbin *no, tree_dados dados ) {
+    if (!(*no)) {
+        (*no) = (struct no_arvbin *) malloc(sizeof(struct no_arvbin));
+        memset(*no, 0, sizeof(struct no_arvbin));
+        strcpy((*no)->dado.nome, dados.nome);
+        strcpy((*no)->dado.posicao, dados.posicao);
+        (*no)->dado.idade = dados.idade;
+        (*no)->dado.habilidade = dados.habilidade;
+        (*no)->dado.camisa = dados.camisa;
+        (*no)->dado.cont = 1;
+    } else /*Se nao tah vazio*/ {
+        int comp = strcmp(nome, (*no)->dado.nome);
+        if (comp == 0) {
+            (*no)->dado.cont++;
+            return;
+        } else if (comp < 0) {
+            insere_arvore(&(*no)->esq, nome, posicao, idade, habilidade, camisa);
+        } else { // > 0
+            insere_arvore(&(*no)->dir, nome, posicao, idade, habilidade, camisa);
+        }
+
+    }
+
+}
+
+
 void inserirJogador(Jogador **raiz, Jogador *novoJogador) {
     if (*raiz == NULL) {
         *raiz = novoJogador;
