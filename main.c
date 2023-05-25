@@ -1,11 +1,9 @@
-    #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "arvore_dinamica.h"
-
+#include <stdio.h>
 int main() {
-    Jogador* raiz = NULL;
+    arvbin jogadores = {0};
     int opcao;
+
 
     do {
         printf("Menu:\n");
@@ -18,77 +16,74 @@ int main() {
         scanf_s("%d", &opcao);
 
         switch (opcao) {
-        case 1: {
-            printf("\n");
-            Jogador* novoJogador = (Jogador*)malloc(sizeof(Jogador));
-            printf("Nome: ");
-            scanf_s("%s", novoJogador->nome, sizeof(novoJogador->nome));
-            printf("Posicao: ");
-            scanf_s("%s", novoJogador->posicao, sizeof(novoJogador->posicao));
-            printf("Idade: ");
-            scanf_s("%d", &novoJogador->idade);
-            printf("Habilidade: ");
-            scanf_s("%d", &novoJogador->habilidade);
-            printf("Camisa: ");
-            scanf_s("%d", &novoJogador->camisa);
+            case 1: {
+                tree_dados dados;
+                printf("\n");
+                printf("Nome: ");
+                scanf_s("%s", dados.nome, sizeof(dados.nome));
+                printf("Posicao: ");
+                scanf_s("%s", dados.posicao, sizeof(dados.posicao));
+                printf("Idade: ");
+                scanf_s("%i", &dados.idade);
+                printf("Habilidade: ");
+                scanf_s("%d", &dados.habilidade);
+                printf("Camisa: ");
+                scanf_s("%d", &dados.camisa);
 
-            novoJogador->esquerda = NULL;
-            novoJogador->direita = NULL;
 
-            inserirJogador(&raiz, novoJogador);
-            break;
-        }
-
-        case 2: {
-            printf("\n");
-            printf("Nome do jogador a buscar: ");
-            char nomeBusca[100];
-            scanf_s("%s", nomeBusca, sizeof(nomeBusca));
-
-            Jogador* jogadorEncontrado = buscarJogador(raiz, nomeBusca);
-
-            if (jogadorEncontrado != NULL) {
-                printf("Jogador encontrado:\n");
-                printf("Nome: %s\n", jogadorEncontrado->nome);
-                printf("Posicao: %s\n", jogadorEncontrado->posicao);
-                printf("Idade: %d\n", jogadorEncontrado->idade);
-                printf("Habilidade: %d\n", jogadorEncontrado->habilidade);
-                printf("Camisa: %d\n", jogadorEncontrado->camisa);
+                inserirJogador(&jogadores, &dados);
+                break;
             }
-            else {
-                printf("Jogador nao encontrado.\n");
+
+            case 2: {
+                printf("\n");
+                printf("Nome do jogador a buscar: ");
+                char nomeBusca[100];
+                scanf_s("%s", nomeBusca, sizeof(nomeBusca));
+
+                struct no_arvbin *jogadorEncontrado = buscarJogador(jogadores, nomeBusca);
+
+                if (jogadorEncontrado != NULL) {
+                    printf("Jogador encontrado:\n");
+                    printf("Nome: %s\n", jogadorEncontrado->dado.nome);
+                    printf("Posicao: %s\n", jogadorEncontrado->dado.posicao);
+                    printf("Idade: %d\n", jogadorEncontrado->dado.idade);
+                    printf("Habilidade: %d\n", jogadorEncontrado->dado.habilidade);
+                    printf("Camisa: %d\n", jogadorEncontrado->dado.camisa);
+                } else {
+                    printf("Jogador nao encontrado.\n");
+                }
+                break;
             }
-            break;
-        }
 
-        case 3:
-            printf("\n");
-            listarJogadores(raiz);
-            break;
+            case 3:
+                printf("\n");
+                listarJogadores(jogadores);
+                break;
 
-        case 4: {
-            printf("\n");
-            printf("Nome do jogador a excluir: ");
-            char nomeExclusao[100];
-            scanf_s("%s", nomeExclusao, sizeof(nomeExclusao));
+            case 4: {
+                printf("\n");
+                printf("Nome do jogador a excluir: ");
+                char nomeExclusao[100];
+                scanf_s("%s", nomeExclusao, sizeof(nomeExclusao));
 
-            excluirJogador(&raiz, nomeExclusao);
-            break;
-        }
+                excluirJogador(&jogadores, nomeExclusao);
+                break;
+            }
 
-        case 0:
-            break;
+            case 0:
+                break;
 
-        default:
-            printf("Opcao invalida.\n");
-            break;
+            default:
+                printf("Opcao invalida.\n");
+                break;
         }
 
         printf("\n");
 
     } while (opcao != 0);
 
-    liberarMemoria(raiz);
+    liberarMemoria(jogadores);
 
     return 0;
 }

@@ -7,25 +7,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-void inserirJogador(arvbin *no, tree_dados dados ) {
+void inserirJogador(arvbin *no, tree_dados *dados) {
     if (!(*no)) {
         (*no) = (struct no_arvbin *) malloc(sizeof(struct no_arvbin));
         memset(*no, 0, sizeof(struct no_arvbin));
-        strcpy((*no)->dado.nome, dados.nome);
-        strcpy((*no)->dado.posicao, dados.posicao);
-        (*no)->dado.idade = dados.idade;
-        (*no)->dado.habilidade = dados.habilidade;
-        (*no)->dado.camisa = dados.camisa;
-        (*no)->dado.cont = 1;
+        strcpy((*no)->dado.nome, dados->nome);
+        strcpy((*no)->dado.posicao, dados->posicao);
+        (*no)->dado.idade = dados->idade;
+        (*no)->dado.habilidade = dados->habilidade;
+        (*no)->dado.camisa = dados->camisa;
     } else /*Se nao tah vazio*/ {
-        int comp = strcmp(nome, (*no)->dado.nome);
-        if (comp == 0) {
-            (*no)->dado.cont++;
-            return;
-        } else if (comp < 0) {
-            insere_arvore(&(*no)->esq, nome, posicao, idade, habilidade, camisa);
+        int comp = strcmp(dados->nome, (*no)->dado.nome);
+        if (comp < 0) {
+            inserirJogador(&(*no)->esquerda, dados);
         } else { // > 0
-            insere_arvore(&(*no)->dir, nome, posicao, idade, habilidade, camisa);
+            inserirJogador(&(*no)->direita, dados);
         }
 
     }
@@ -33,60 +29,48 @@ void inserirJogador(arvbin *no, tree_dados dados ) {
 }
 
 
-void inserirJogador(Jogador **raiz, Jogador *novoJogador) {
-    if (*raiz == NULL) {
-        *raiz = novoJogador;
-    } else {
-        if (strcmp(novoJogador->nome, (*raiz)->nome) < 0) {
-            inserirJogador(&((*raiz)->esquerda), novoJogador);
-        } else {
-            inserirJogador(&((*raiz)->direita), novoJogador);
-        }
-    }
-}
-
-Jogador *buscarJogador(Jogador *raiz, const char *nome) {
-    if (raiz == NULL || strcmp(nome, raiz->nome) == 0) {
+struct no_arvbin *buscarJogador(arvbin raiz, const char *nome) {
+    if (raiz == NULL || strcmp(nome, raiz->dado.nome) == 0) {
         return raiz;
     }
 
-    if (strcmp(nome, raiz->nome) < 0) {
+    if (strcmp(nome, raiz->dado.nome) < 0) {
         return buscarJogador(raiz->esquerda, nome);
     } else {
         return buscarJogador(raiz->direita, nome);
     }
 }
 
-void listarJogadores(Jogador *raiz) {
+void listarJogadores(arvbin raiz) {
     if (raiz != NULL) {
         listarJogadores(raiz->esquerda);
-        printf("Nome: %s\n", raiz->nome);
-        printf("Posicao: %s\n", raiz->posicao);
-        printf("Idade: %d\n", raiz->idade);
-        printf("Habilidade: %d\n", raiz->habilidade);
-        printf("Camisa: %d\n", raiz->camisa);
+        printf("Nome: %s\n", raiz->dado.nome);
+        printf("Posicao: %s\n", raiz->dado.posicao);
+        printf("Idade: %d\n", raiz->dado.idade);
+        printf("Habilidade: %d\n", raiz->dado.habilidade);
+        printf("Camisa: %d\n", raiz->dado.camisa);
         printf("\n");
         listarJogadores(raiz->direita);
     }
 }
 
-void excluirJogador(Jogador **raiz, const char *nome) {
+void excluirJogador(arvbin *raiz, const char *nome) {
     if (*raiz == NULL) {
         printf("Jogador nao encontrado.\n");
     } else {
-        if (strcmp(nome, (*raiz)->nome) < 0) {
+        if (strcmp(nome, (*raiz)->dado.nome) < 0) {
             excluirJogador(&((*raiz)->esquerda), nome);
-        } else if (strcmp(nome, (*raiz)->nome) > 0) {
+        } else if (strcmp(nome, (*raiz)->dado.nome) > 0) {
             excluirJogador(&((*raiz)->direita), nome);
         } else {
-            Jogador *jogadorRemovido = *raiz;
+            arvbin jogadorRemovido = *raiz;
 
             if ((*raiz)->esquerda == NULL) {
                 *raiz = (*raiz)->direita;
             } else if ((*raiz)->direita == NULL) {
                 *raiz = (*raiz)->esquerda;
             } else {
-                Jogador *substituto = (*raiz)->direita;
+                arvbin substituto = (*raiz)->direita;
 
                 while (substituto->esquerda != NULL) {
                     substituto = substituto->esquerda;
@@ -102,7 +86,7 @@ void excluirJogador(Jogador **raiz, const char *nome) {
     }
 }
 
-void liberarMemoria(Jogador *raiz) {
+void liberarMemoria(arvbin raiz) {
     if (raiz != NULL) {
         liberarMemoria(raiz->esquerda);
         liberarMemoria(raiz->direita);

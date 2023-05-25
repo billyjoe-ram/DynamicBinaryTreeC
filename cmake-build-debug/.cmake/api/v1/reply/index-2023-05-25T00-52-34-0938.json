@@ -94,6 +94,10 @@
 				"minor" : 4
 			}
 		},
+		"desktop.ini" : 
+		{
+			"error" : "unknown query file"
+		},
 		"toolchains-v1" : 
 		{
 			"jsonFile" : "toolchains-v1-0f582825f57218df76c2.json",

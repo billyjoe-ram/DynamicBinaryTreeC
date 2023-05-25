@@ -1,0 +1,10 @@
+# ninja log v5
+9	110	7066779052748756	CMakeFiles/DynamicBinaryTree.dir/arvore_dinamica.c.obj	43a09885d0ea3f59
+1	208	7066791225260378	CMakeFiles/DynamicBinaryTree.dir/main.c.obj	99f671a170333cdd
+209	339	7066791226560831	DynamicBinaryTree.exe	7fa0c1a99c933ae
+1	79	7066792380357453	CMakeFiles/DynamicBinaryTree.dir/main.c.obj	99f671a170333cdd
+80	171	7066792381267650	DynamicBinaryTree.exe	7fa0c1a99c933ae
+2	73	7066792732645376	CMakeFiles/DynamicBinaryTree.dir/main.c.obj	99f671a170333cdd
+74	167	7066792733575589	DynamicBinaryTree.exe	7fa0c1a99c933ae
+2	73	7066793660312744	CMakeFiles/DynamicBinaryTree.dir/main.c.obj	99f671a170333cdd
+74	166	7066793661233018	DynamicBinaryTree.exe	7fa0c1a99c933ae
